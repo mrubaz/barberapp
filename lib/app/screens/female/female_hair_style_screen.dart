@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:barberapp/app/screens/female/female_camera_screen.dart';
+import 'package:barberapp/app/screens/user_style_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,7 +44,13 @@ class FemaleHairStyleScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return StyleCardWidget(
                       imagePath: controller.hairStylesList[index],
-                      onTap: () => controller.onTapCameraFunc(),
+                      onTapCamera: () {
+                        Get.to(() => const FemaleCameraScreen());
+                      },
+                      // controller.onTapCameraFunc(),
+                      onTapHairStyle: () {
+                        Get.to(() => const UserHairStyleList());
+                      },
                     );
                   },
                 ),
@@ -74,7 +82,6 @@ class FemaleHairStyleController extends GetxController {
       final XFile? pickedFile =
           await imagePicker.pickImage(source: ImageSource.camera);
       final File imageFile = File(pickedFile!.path);
-      print("ImagePicker");
       update();
       return imageFile;
     } catch (e) {

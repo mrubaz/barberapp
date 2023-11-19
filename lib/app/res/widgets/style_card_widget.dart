@@ -9,14 +9,16 @@ class StyleCardWidget extends StatelessWidget {
     this.isMainWidget = false,
     this.title,
     this.desc,
-    this.onTap,
+    this.onTapCamera,
+    this.onTapHairStyle,
   }) : super(key: key);
 
   final String imagePath;
   final bool isMainWidget;
   final String? title;
   final String? desc;
-  final VoidCallback? onTap;
+  final VoidCallback? onTapCamera;
+  final VoidCallback? onTapHairStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +34,22 @@ class StyleCardWidget extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 5),
-          Image.asset(
-            imagePath,
-            height: Get.height * .15,
+          Expanded(
+            child: InkWell(
+              onTap: onTapHairStyle,
+              child: Image.asset(
+                imagePath,
+                height: Get.height * .15,
+              ),
+            ),
           ),
-          const SizedBox(height: 10),
+          // const Expanded(child: SizedBox(height: 10)),
           isMainWidget == true
               ? const Offstage()
               : Align(
                   alignment: Alignment.bottomRight,
                   child: InkWell(
-                    onTap: onTap,
+                    onTap: onTapCamera,
                     child: const Icon(
                       Icons.camera_alt_rounded,
                       size: 50,
@@ -52,34 +59,36 @@ class StyleCardWidget extends StatelessWidget {
                 ),
           isMainWidget == false
               ? const Offstage()
-              : const Padding(
-                  padding: EdgeInsets.only(left: 15.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "long hair rough cutt",
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+              : Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "long hair rough cutt",
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.w700),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-          isMainWidget == false ? const Offstage() : const SizedBox(height: 5),
-          isMainWidget == false
-              ? const Offstage()
-              : Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "lates style",
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade700),
+                    const SizedBox(height: 5),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "lates style",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.shade700),
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 15),
+                  ],
                 ),
-          isMainWidget == false ? const Offstage() : const SizedBox(height: 15),
         ],
       ),
     );

@@ -105,7 +105,7 @@ class LoginScreen extends StatelessWidget {
                         message: "Congratulations You are Login",
                         onTapOk: () {
                           Get.back();
-                          Get.to(() => const MainScreen());
+                          Get.offAll(() => const MainScreen());
                         },
                       );
                     },

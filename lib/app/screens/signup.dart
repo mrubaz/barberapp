@@ -106,7 +106,7 @@ class SignUpScreen extends StatelessWidget {
                         message: "Congratulations You are Resgister",
                         onTapOk: () {
                           Get.back();
-                          Get.to(() => const LoginScreen());
+                          Get.offAll(() => const LoginScreen());
                         },
                       );
                     },

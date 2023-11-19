@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../res/widgets/style_card_widget.dart';
+import '../user_style_data.dart';
+import 'male_camera_screen.dart';
 
 class MaleHairStyleScreen extends StatelessWidget {
   const MaleHairStyleScreen({super.key});
@@ -34,13 +39,16 @@ class MaleHairStyleScreen extends StatelessWidget {
                     mainAxisSpacing: 10.0,
                     childAspectRatio: 0.85,
                   ),
-                  itemCount: controller.hairStylesList
-                      .length, // Set the number of containers to display
+                  itemCount: controller.hairStylesList.length,
                   itemBuilder: (context, index) {
                     return StyleCardWidget(
                       imagePath: controller.hairStylesList[index],
-                      onTap: () {
-                        print(index);
+                      onTapCamera: () {
+                        Get.to(() => const MaleCameraScreen());
+                      },
+                      // controller.onTapCameraFunc(),
+                      onTapHairStyle: () {
+                        Get.to(() => const UserHairStyleList());
                       },
                     );
                   },
@@ -55,6 +63,8 @@ class MaleHairStyleScreen extends StatelessWidget {
 }
 
 class MaleHairStyleController extends GetxController {
+  ImagePicker imagePicker = ImagePicker();
+
   List<String> hairStylesList = [
     "assets/images/men.png",
     "assets/images/men_curley.png",
@@ -66,4 +76,16 @@ class MaleHairStyleController extends GetxController {
     "assets/images/men_curley.png",
     "assets/images/men_black.png",
   ];
+
+  onTapCameraFunc() async {
+    try {
+      final XFile? pickedFile =
+          await imagePicker.pickImage(source: ImageSource.camera);
+      final File imageFile = File(pickedFile!.path);
+      update();
+      return imageFile;
+    } catch (e) {
+      return null;
+    }
+  }
 }
